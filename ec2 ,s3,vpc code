@@ -1,0 +1,22 @@
+resource "aws_instance" "batch-19" {
+  ami           = "ami-08a52ddb321b32a8c"
+  instance_type = "t2.micro"
+
+  tags = {
+    name = "devops"
+  }
+}
+
+resource "aws_s3_bucket" "my-bucket" {
+  bucket = "my-tf-test-bucket-batch-19"
+
+  tags = {
+    Name        = "My bucket"
+    Environment = "Dev"
+  }
+}
+
+
+resource "aws_vpc" "main" {
+  cidr_block = "20.0.0.0/16"
+}
