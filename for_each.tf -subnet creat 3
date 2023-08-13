@@ -1,0 +1,26 @@
+local {
+    subnets = {
+        "subnet-1" = {cidr_block = "10.10.1.0/24", availability_zone = "eu-west-1a", tag_name = private-subnet-1a}
+        "subnet-2" = {cidr_block = "10.10.2.0/24", availability_zone = "eu-west-1b", tag_name = private-subnet-1b}
+        "subnet-3" = {cidr_block = "10.10.3.0/24", availability_zone = "eu-west-1c", tag_name = private-subnet-1c}
+    }
+}
+        resource "aws_vpc" "vpc_test" {
+            cidr_block = "10.10.0.0/16"
+
+            tags = {
+                name = "vpc_test-vpc"
+            }
+        }
+        resource "aws_subnet" "private" {
+            for-each  = local.subnets
+
+            cidr_block         = each.value.cidr_block
+            vpc_id             = aws_vpc.vpc_test.vpc_id
+            availability_zone  = each.value.availability_zone
+
+            tags ={
+                name = each.value.tag_name
+            }
+        }
+
