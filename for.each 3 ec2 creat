@@ -1,0 +1,19 @@
+locals {
+    ec2 = {
+        "ec2-1" = {ami = "ami-053b0d53c279acc90", instance_type = "t2.micro", tag_name = "webserver-1"}
+        "ec2-2" = {ami = "ami-053b0d53c279acc90", instance_type = "t3.micro", tag_name = "db-server"}
+        "ec2-3" = {ami = "ami-0fc682b2a42e57ca2", instance_type = "t2.nano", tag_name = "webserver-2"}
+        
+    }
+}
+       
+        resource "aws_instance" "kausar" {
+            for_each  = local.ec2
+
+            ami                = each.value.ami
+            instance_type      = each.value.instance_type
+            
+            tags ={
+                name = each.value.tag_name
+            }
+        }
