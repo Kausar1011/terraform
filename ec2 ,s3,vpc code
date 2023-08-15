@@ -22,3 +22,7 @@ resource "aws_s3_bucket" "my-bucket" {
 resource "aws_vpc" "main" {
   cidr_block = "20.0.0.0/16"
 }
+
+resource "aws_vpc" "main" {
+  cidr_block = "20.0.0.0/16"
+}
